@@ -118,9 +118,18 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .ready .hero-title .line:nth-child(3) > span { transition-delay: 0.18s; }
 .ready .hero-title em { background-size: 100% 0.085em; transition: background-size 0.7s var(--ease) 0.95s; }
 
-.js .hero-kicker, .js .hero-grid, .js .facts { opacity: 0; }
-.ready .hero-kicker, .ready .hero-grid, .ready .facts { opacity: 1; transition: opacity 0.6s ease 0.35s; }
-.ready .facts { transition-delay: 0.6s; }
+.js .hero-kicker, .js .hero-grid { opacity: 0; }
+.ready .hero-kicker, .ready .hero-grid { opacity: 1; transition: opacity 0.6s ease 0.35s; }
+
+/* facts: the heavy rule is drawn first, then each figure rises in turn */
+.js .facts { border-top-color: transparent; background: linear-gradient(var(--ink), var(--ink)) left top / 0% 2px no-repeat; background-origin: border-box; }
+.ready .facts { background-size: 100% 2px; transition: background-size 0.9s var(--ease) 0.45s; }
+.js .facts > div { opacity: 0; transform: translateY(12px); }
+.ready .facts > div { opacity: 1; transform: none; transition: opacity 0.5s ease, transform 0.6s var(--ease); transition-delay: calc(0.7s + var(--k, 0) * 0.08s); }
+.facts > div:nth-child(2) { --k: 1; }
+.facts > div:nth-child(3) { --k: 2; }
+.facts > div:nth-child(4) { --k: 3; }
+.facts > div:nth-child(5) { --k: 4; }
 
 .hero-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(28px, 6vw, 96px); align-items: start; }
 .hero-lede { font-size: clamp(18px, 1.55vw, 22px); line-height: 1.5; max-width: 30em; }
@@ -139,9 +148,20 @@ figcaption b { margin-right: 0.5em; font: 500 12px var(--f-mono); color: var(--i
 .ready .map-lanes path { stroke-dashoffset: 0; transition: stroke-dashoffset 1.5s var(--ease) 0.5s; }
 .ready .map-lanes path.land { transition-delay: 1.5s; transition-duration: 0.8s; }
 .map-dots circle { fill: var(--s1); stroke: var(--paper); stroke-width: 2; }
-.map-nodes circle { fill: var(--paper); stroke: var(--ink); stroke-width: 1.5; }
+.map-nodes circle { fill: var(--paper); stroke: var(--ink); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; }
 .map-nodes circle.origin { fill: var(--ink); }
 .map-nodes text { font: 500 11.5px var(--f-body); fill: var(--ink); }
+/* each city appears as its lane reaches it */
+.js .map-nodes circle { transform: scale(0); }
+.js .map-nodes text { opacity: 0; }
+.ready .map-nodes circle { transform: none; transition: transform 0.5s cubic-bezier(0.3, 1.5, 0.5, 1) var(--d, 0.5s); }
+.ready .map-nodes text { opacity: 1; transition: opacity 0.45s ease var(--d, 0.5s); }
+.map-nodes > g:nth-child(1) { --d: 0.45s; }
+.map-nodes > g:nth-child(2) { --d: 1.75s; }
+.map-nodes > g:nth-child(3) { --d: 1.85s; }
+.map-nodes > g:nth-child(4) { --d: 2.3s; }
+.map-nodes > g:nth-child(5) { --d: 1.95s; }
+.map-pings circle { fill: none; stroke: var(--s1); stroke-width: 1.5; }
 
 .facts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: clamp(40px, 6vw, 80px); border-top: 2px solid var(--ink); }
 .facts > div { padding: 18px 18px 0 0; }
@@ -393,8 +413,9 @@ input[type="range"]:hover::-webkit-slider-thumb, input[type="range"]:active::-we
 .split-legend b { grid-column: 2; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--ink); }
 
 /* ---------- Experience ---------- */
+.xp { border-top: 2px solid var(--ink); }
 .xp > li { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 24px; padding: 24px 0; border-top: 1px solid var(--rule); }
-.xp > li:first-child { border-top: 2px solid var(--ink); }
+.xp > li:first-child { border-top: 0; }
 .xp-when { padding-top: 3px; font: 400 13px/1.5 var(--f-mono); color: var(--ink-2); }
 .xp h3 { font-size: 20px; font-weight: 600; line-height: 1.25; }
 .xp-where { margin-top: 2px; font-size: 14.5px; color: var(--ink-2); }
@@ -496,8 +517,9 @@ input[type="range"]:hover::-webkit-slider-thumb, input[type="range"]:active::-we
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; transition-delay: 0s !important; }
-  .map-dots, .pipe-pk { display: none; }
+  .map-dots, .pipe-pk, .map-pings { display: none; }
   .recon .diff, .recon .was { display: none; }
+  .recon-row::before, .career .now-ring { display: none; }
 }
 
 /* very narrow phones: keep the top bar on one line */
@@ -578,4 +600,120 @@ input[type="range"]:hover::-webkit-slider-thumb, input[type="range"]:active::-we
 @media (max-width: 600px) {
   .coll-row { grid-template-columns: minmax(0, 1fr) auto; }
   .coll-val { grid-column: 2; }
+}
+
+/* ==========================================================================
+   Motion layer
+   One vocabulary for the whole page: type rises out of a mask, rules are
+   drawn left to right, numbers run up to their value. main.js adds `.motion`
+   only when motion is allowed, so nothing is hidden if the script is missing
+   or the visitor has asked for reduced motion.
+   ========================================================================== */
+
+/* reading progress: a hairline under the top bar */
+.progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; pointer-events: none; }
+.progress i { display: block; height: 100%; background: var(--ink); transform: scaleX(0); transform-origin: left center; }
+
+/* the current section: one marker that slides between links */
+.top-ind { position: absolute; left: 0; bottom: 0; width: 0; height: 1.5px; background: var(--ink); opacity: 0; pointer-events: none; transition: transform 0.45s var(--ease), width 0.45s var(--ease), opacity 0.2s; }
+.top-ind.on { opacity: 1; }
+.top-nav.has-ind a::after { display: none; }
+@media (min-width: 861px) { .top-nav { position: relative; } }
+@media (max-width: 860px) { .top-ind { display: none; } }
+
+/* links and buttons */
+.btn span[aria-hidden] { display: inline-block; transition: transform 0.2s var(--ease); }
+.btn:hover span[aria-hidden] { transform: translateY(2px); }
+.link-arrow:hover { animation: underline-wipe 0.6s var(--ease); }
+@keyframes underline-wipe {
+  0% { background-position: right bottom; background-size: 100% 1px; }
+  45% { background-position: right bottom; background-size: 0% 1px; }
+  46% { background-position: left bottom; background-size: 0% 1px; }
+  100% { background-position: left bottom; background-size: 100% 1px; }
+}
+
+/* section headings: the title rises out of its own line */
+.motion .side-no, .motion .side-note { opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.6s var(--ease); }
+.motion .side-note { transition-delay: 0.18s; }
+.motion .side-title { overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; }
+.motion .side-title > span { display: inline-block; transform: translateY(110%); transition: transform 0.8s var(--ease) 0.06s; }
+.motion .side.in .side-no, .motion .side.in .side-note { opacity: 1; transform: none; }
+.motion .side.in .side-title > span { transform: none; }
+
+/* blocks of content rise in, staggered when several arrive together */
+.motion .rise { opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease, transform 0.7s var(--ease); transition-delay: var(--delay, 0s); }
+.motion .rise.in { opacity: 1; transform: none; }
+
+/* heavy rules are drawn, left to right */
+.motion .draw-rule { border-top-color: transparent; background-image: linear-gradient(var(--ink), var(--ink)); background-repeat: no-repeat; background-origin: border-box; background-position: left top; background-size: 0% var(--rw, 2px); transition: background-size 1s var(--ease); }
+.motion .draw-rule.in { background-size: 100% var(--rw, 2px); }
+.motion .pso > div.draw-rule { --rw: 1px; }
+.motion .pso > div.draw-rule:nth-child(2) { transition-delay: 0.12s; }
+.motion .pso > div.draw-rule:nth-child(3) { transition-delay: 0.24s; }
+
+/* Fig. 2: each row is checked in turn, and the short payment is checked again once it is settled */
+.recon-row { position: relative; isolation: isolate; }
+.recon-row::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--plane); opacity: 0; animation: rc-scan 8s var(--ease) infinite; animation-delay: calc(var(--i, 2) * 0.5s); }
+.recon-row.is-diff::before { animation-name: rc-scan-twice; }
+@keyframes rc-scan { 0%, 4% { opacity: 0; } 7% { opacity: 1; } 15%, 100% { opacity: 0; } }
+@keyframes rc-scan-twice { 0%, 4% { opacity: 0; } 7% { opacity: 1; } 15%, 50% { opacity: 0; } 53% { opacity: 1; } 62%, 100% { opacity: 0; } }
+
+/* Fig. 3: the pipes are laid before anything flows through them */
+.motion .pipe .pipe-lines path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.motion .pipe .pipe-pk, .motion .pipe .pipe-core { opacity: 0; }
+.motion .case-fig.in .pipe-lines path { stroke-dashoffset: 0; transition: stroke-dashoffset 0.9s var(--ease) 0.2s; }
+.motion .case-fig.in .pipe-core { opacity: 1; transition: opacity 0.4s ease 0.85s; }
+.motion .case-fig.in .pipe-lines path:nth-child(n + 5) { transition-duration: 0.6s; transition-delay: 1s; }
+.motion .case-fig.in .pipe-pk { opacity: 1; transition: opacity 0.4s ease 1.4s; }
+
+/* dashboards: figures keep their width while they count */
+.tile-value { font-variant-numeric: tabular-nums; }
+
+/* order to cash: while the stages play on their own, a ring shows the time left on the current one */
+@property --t { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+.flow-steps i { position: relative; }
+.flow.is-auto .flow-steps button[aria-selected="true"] i::after {
+  content: ""; position: absolute; inset: -6px; border-radius: 50%;
+  background: conic-gradient(var(--ink) var(--t), var(--rule-2) 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1px));
+  animation: flow-timer 4.2s linear forwards;
+}
+@keyframes flow-timer { from { --t: 0%; } to { --t: 100%; } }
+.flow-panel.is-on > * { animation: rise-in 0.5s var(--ease) both; }
+.flow-panel.is-on > :nth-child(2) { animation-delay: 0.07s; }
+.flow-panel.is-on > :nth-child(3) { animation-delay: 0.14s; }
+@keyframes rise-in { from { opacity: 0; transform: translateY(10px); } }
+
+/* Fig. 4: career as a step chart */
+.career { margin-bottom: clamp(32px, 4vw, 48px); }
+.career-host { min-height: 220px; }
+.career svg { display: block; width: 100%; height: auto; overflow: visible; }
+.career .grid { stroke: var(--rule); stroke-width: 1; }
+.career .tick { font: 400 11px var(--f-mono); fill: var(--ink-3); }
+.career .step { fill: none; stroke: var(--s1); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.career .wash { fill: var(--s1); opacity: 0.08; }
+.career .role { font: 500 12.5px var(--f-body); fill: var(--ink); }
+.career .when { font: 400 11px var(--f-mono); fill: var(--ink-2); }
+.career .now-dot { fill: var(--s1); stroke: var(--paper); stroke-width: 2; }
+.career .now-ring { fill: none; stroke: var(--s1); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; animation: ping 2.6s var(--ease) infinite; }
+.career .now-label { font: 500 11px var(--f-mono); fill: var(--s1-ink); }
+.career .is-drawing .step { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.8s linear forwards; }
+.career .is-drawing .wash { opacity: 0; animation: wash-in 0.7s ease 1.5s forwards; }
+.career .is-drawing .lab { opacity: 0; animation: lab-in 0.45s var(--ease) forwards; animation-delay: var(--at, 0s); }
+.career .is-paused, .career .is-paused * { animation-play-state: paused !important; }
+@keyframes wash-in { to { opacity: 0.08; } }
+@keyframes lab-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@keyframes ping { 0% { transform: scale(1); opacity: 0.7; } 70%, 100% { transform: scale(3.2); opacity: 0; } }
+
+/* contact: the closing line rises word by word */
+.motion .end-title .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.12em; margin-bottom: -0.12em; }
+.motion .end-title .w > span { display: inline-block; transform: translateY(110%); transition: transform 0.8s var(--ease); transition-delay: calc(var(--i, 0) * 35ms); }
+.motion .end-title.in .w > span { transform: none; }
+
+@media print {
+  .progress { display: none; }
+  .motion .rise, .motion .side-no, .motion .side-note { opacity: 1 !important; transform: none !important; }
+  .motion .side-title > span, .motion .end-title .w > span { transform: none !important; }
+  .motion .draw-rule { background-size: 100% var(--rw, 2px) !important; }
 }

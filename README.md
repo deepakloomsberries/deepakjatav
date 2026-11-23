@@ -19,6 +19,10 @@ Plain HTML, CSS and JavaScript. No build step and no dependencies, so GitHub Pag
 
 ## Publishing a change
 
+First bump the `?v=` version on the `style.css` and `main.js` links in `index.html`
+(both must match). GitHub Pages tells browsers to reuse files for 10 minutes, so without
+a new version a visitor can get the new page with the old stylesheet and see it unstyled.
+
 GitHub Pages serves this site from the `gh-pages` branch, so push both branches together:
 
 ```powershell

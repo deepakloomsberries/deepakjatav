@@ -20,7 +20,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
+<!-- ?v= must change on every publish: GitHub Pages lets browsers reuse files for 10 minutes -->
+<link rel="stylesheet" href="assets/css/style.css?v=2026-11-23.3">
 <script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('ready')},2500);</script>
 
 <script type="application/ld+json">
@@ -56,6 +57,7 @@
     <a class="btn btn-solid top-cta" href="assets/Deepak_Jatav_Resume.pdf" download="Deepak_Jatav_Resume.pdf" data-resume>Résumé <span aria-hidden="true">&darr;</span></a>
     <button class="top-menu" id="menuBtn" type="button" aria-expanded="false" aria-controls="topNav">Menu</button>
   </div>
+  <div class="progress" aria-hidden="true"><i id="progress"></i></div>
 </header>
 
 <main>
@@ -72,7 +74,7 @@
 
   <div class="hero-grid">
     <div class="hero-copy">
-      <p class="hero-lede">I'm Deepak. For five years I've built the data warehouse, the dashboards and the internal tools behind a home-textiles brand that sells across Saudi Arabia and the UAE. I also lead the six analysts who keep those numbers right.</p>
+      <p class="hero-lede">I'm Deepak. For five years I've built the data warehouse, the dashboards and the internal tools behind Looms &amp; Berries, a home-textiles brand that sells across Saudi Arabia and the UAE. I also lead the six analysts who keep those numbers right.</p>
       <div class="hero-actions">
         <a class="btn btn-solid" href="assets/Deepak_Jatav_Resume.pdf" download="Deepak_Jatav_Resume.pdf" data-resume>Download résumé (PDF)</a>
         <a class="link-arrow" href="#work">See the work <span aria-hidden="true">&darr;</span></a>
@@ -103,6 +105,14 @@
           <circle r="3.5"><animateMotion dur="7s" repeatCount="indefinite" begin="1.4s"><mpath href="#ln3"/></animateMotion></circle>
           <circle r="3.5"><animateMotion dur="5.2s" repeatCount="indefinite" begin="3.5s"><mpath href="#ln1"/></animateMotion></circle>
           <circle r="3.5"><animateMotion dur="7s" repeatCount="indefinite" begin="4.9s"><mpath href="#ln3"/></animateMotion></circle>
+        </g>
+        <!-- a ring at each destination, timed to the moment a dot arrives (begin = dot begin + dur) -->
+        <g class="map-pings">
+          <circle cx="231" cy="125" r="4.5" opacity="0"><animate attributeName="r" values="4.5;17;17" keyTimes="0;0.32;1" dur="5.2s" begin="6.1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.75;0;0" keyTimes="0;0.32;1" dur="5.2s" begin="6.1s" repeatCount="indefinite"/></circle>
+          <circle cx="231" cy="125" r="4.5" opacity="0"><animate attributeName="r" values="4.5;17;17" keyTimes="0;0.32;1" dur="5.2s" begin="8.7s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.75;0;0" keyTimes="0;0.32;1" dur="5.2s" begin="8.7s" repeatCount="indefinite"/></circle>
+          <circle cx="174" cy="103" r="4.5" opacity="0"><animate attributeName="r" values="4.5;17;17" keyTimes="0;0.28;1" dur="6s" begin="8.1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.75;0;0" keyTimes="0;0.28;1" dur="6s" begin="8.1s" repeatCount="indefinite"/></circle>
+          <circle cx="56" cy="192" r="4.5" opacity="0"><animate attributeName="r" values="4.5;17;17" keyTimes="0;0.24;1" dur="7s" begin="8.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.75;0;0" keyTimes="0;0.24;1" dur="7s" begin="8.4s" repeatCount="indefinite"/></circle>
+          <circle cx="56" cy="192" r="4.5" opacity="0"><animate attributeName="r" values="4.5;17;17" keyTimes="0;0.24;1" dur="7s" begin="11.9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.75;0;0" keyTimes="0;0.24;1" dur="7s" begin="11.9s" repeatCount="indefinite"/></circle>
         </g>
         <g class="map-nodes">
           <g transform="translate(472 348)"><circle class="origin" r="6"/><text x="0" y="24" text-anchor="middle">Bengaluru</text></g>
@@ -176,12 +186,12 @@
       <figure class="case-fig">
         <svg class="pipe" viewBox="0 0 480 250" role="img" aria-label="Diagram: marketplace reports, ads data, ERP and OMS feed one BigQuery warehouse, which feeds Looker Studio and Power BI dashboards">
           <g class="pipe-lines">
-            <path id="pp1" d="M132 38 C 190 38 190 125 240 125"/>
-            <path id="pp2" d="M132 96 C 180 96 190 125 240 125"/>
-            <path id="pp3" d="M132 154 C 180 154 190 125 240 125"/>
-            <path id="pp4" d="M132 212 C 190 212 190 125 240 125"/>
-            <path id="pp5" d="M320 125 C 350 125 350 80 372 80"/>
-            <path id="pp6" d="M320 125 C 350 125 350 170 372 170"/>
+            <path id="pp1" pathLength="1" d="M132 38 C 190 38 190 125 240 125"/>
+            <path id="pp2" pathLength="1" d="M132 96 C 180 96 190 125 240 125"/>
+            <path id="pp3" pathLength="1" d="M132 154 C 180 154 190 125 240 125"/>
+            <path id="pp4" pathLength="1" d="M132 212 C 190 212 190 125 240 125"/>
+            <path id="pp5" pathLength="1" d="M320 125 C 350 125 350 80 372 80"/>
+            <path id="pp6" pathLength="1" d="M320 125 C 350 125 350 170 372 170"/>
           </g>
           <g class="pipe-pk">
             <circle r="3"><animateMotion dur="2.8s" repeatCount="indefinite" begin="0s"><mpath href="#pp1"/></animateMotion></circle>
@@ -426,6 +436,11 @@
   </div>
 
   <div class="main">
+    <figure class="career" id="career">
+      <div class="career-host" role="img" aria-label="Step chart of roles at Looms &amp; Berries: Intern from April 2021, Data Assistant from July 2021, Data Analyst from December 2021, Senior Data Analyst and Operations Lead from September 2023 to now."></div>
+      <figcaption><b>Fig. 4</b> Roles at Looms &amp; Berries, plotted by start date, with time in each role.</figcaption>
+    </figure>
+
     <ol class="xp">
       <li>
         <p class="xp-when">Sep 2023 to now</p>
@@ -538,6 +553,6 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/main.js" defer></script>
+<script src="assets/js/main.js?v=2026-11-23.3" defer></script>
 </body>
 </html>

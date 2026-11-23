@@ -35,16 +35,31 @@
     return node;
   }
 
+  /* runs once the web fonts are in (or after a short wait), so the intro
+     animates in the real typeface instead of swapping halfway through */
+  function whenFontsReady(cb) {
+    let done = false;
+    const go = () => { if (done) return; done = true; requestAnimationFrame(() => requestAnimationFrame(cb)); };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(go, go);
+    setTimeout(go, 900);
+  }
+
   /* ---------------------------------------------------------------------
      Page chrome: load state, top bar, menu, active link, reveal, clock
      ------------------------------------------------------------------- */
   function chrome() {
-    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add('ready')));
-
     const top = $('#top');
-    const onScroll = () => top.classList.toggle('is-stuck', window.scrollY > 8);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    const bar = $('#progress');
+    let ticking = false;
+    const paint = () => {
+      ticking = false;
+      const max = root.scrollHeight - window.innerHeight;
+      if (bar) bar.style.transform = `scaleX(${max > 0 ? clamp(window.scrollY / max, 0, 1).toFixed(4) : 0})`;
+      top.classList.toggle('is-stuck', window.scrollY > 8);
+    };
+    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(paint); } }, { passive: true });
+    window.addEventListener('resize', paint);
+    paint();
 
     const menuBtn = $('#menuBtn');
     const setMenu = (open) => {
@@ -57,11 +72,34 @@
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
 
     const links = $$('.top-nav a');
+    const nav = $('#topNav');
+    const ind = h('span', { class: 'top-ind', 'aria-hidden': 'true' });
+    nav.appendChild(ind);
+    nav.classList.add('has-ind');
+    let activeLink = null;
+    const placeInd = () => {
+      if (!activeLink) { ind.classList.remove('on'); return; }
+      const appearing = !ind.classList.contains('on');
+      if (appearing) ind.style.transition = 'none'; // appear in place rather than slide in from the edge
+      ind.style.width = `${activeLink.offsetWidth}px`;
+      ind.style.transform = `translateX(${activeLink.offsetLeft}px)`;
+      if (appearing) { void ind.offsetWidth; ind.style.transition = ''; }
+      ind.classList.add('on');
+    };
+    window.addEventListener('resize', placeInd);
+    whenFontsReady(() => {
+      root.classList.add('ready');
+      counters();
+      placeInd();
+    });
+
     if ('IntersectionObserver' in window) {
       const spy = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          links.forEach((a) => a.classList.toggle('is-on', a.getAttribute('href') === `#${entry.target.id}`));
+          activeLink = links.find((a) => a.getAttribute('href') === `#${entry.target.id}`) || null;
+          links.forEach((a) => a.classList.toggle('is-on', a === activeLink));
+          placeInd();
         });
       }, { rootMargin: '-45% 0px -50% 0px' });
       $$('[data-section]').forEach((sec) => spy.observe(sec));
@@ -90,6 +128,49 @@
 
     const year = $('#year');
     if (year) year.textContent = new Date().getFullYear();
+  }
+
+  /* ---------------------------------------------------------------------
+     Motion layer: section titles, staggered blocks, drawn rules, closing line.
+     Only switched on when the visitor allows motion and the browser can
+     report what is on screen, so the page is never left hidden.
+     ------------------------------------------------------------------- */
+  function motion() {
+    if (reduce || !('IntersectionObserver' in window)) return;
+    root.classList.add('motion');
+
+    $$('.side-title').forEach((t) => {
+      const span = h('span', { text: t.textContent });
+      t.textContent = '';
+      t.appendChild(span);
+    });
+
+    const end = $('.end-title');
+    if (end) {
+      const text = end.textContent.trim();
+      end.setAttribute('aria-label', text);
+      end.textContent = '';
+      text.split(/\s+/).forEach((word, i) => {
+        if (i) end.appendChild(document.createTextNode(' '));
+        const w = h('span', { class: 'w', 'aria-hidden': 'true' }, h('span', { text: word }));
+        w.style.setProperty('--i', i);
+        end.appendChild(w);
+      });
+    }
+
+    const tag = (sel, cls) => $$(sel).forEach((el) => el.classList.add(cls));
+    tag('.more-list li, .xp > li, .kit > div, .calc, .end .mail, .end-links, .end-foot', 'rise');
+    tag('.pso > div, .flow-panels, .xp, .kit, .verdict', 'draw-rule');
+
+    const io = new IntersectionObserver((entries) => {
+      entries.filter((e) => e.isIntersecting).forEach((entry, i) => {
+        const el = entry.target;
+        if (el.classList.contains('rise')) el.style.setProperty('--delay', `${Math.min(i, 6) * 70}ms`);
+        el.classList.add('in');
+        io.unobserve(el);
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
+    $$('.side, .rise, .draw-rule, .case-fig, .end-title').forEach((el) => io.observe(el));
   }
 
   /* counters in the hero facts strip */
@@ -490,12 +571,50 @@
       view.appendChild(h('div', { class: 'charts' }, left, right));
     }
 
+    /* KPI tiles run from the figure they showed last to the new one, so a
+       filter change reads as a change rather than a swap. A tile whose unit
+       changed (K to M, say) is set directly instead. */
+    const lastTile = new Map();
+    const NUM = /^(\D*?)(\d[\d,]*(?:\.\d+)?)(.*)$/;
+    function countTiles(animate) {
+      $$('.tile', view).forEach((t) => {
+        const el = $('.tile-value', t);
+        const key = `${state.view}|${$('.tile-label', t).textContent}`;
+        const text = el.textContent;
+        const prev = lastTile.get(key);
+        lastTile.set(key, text);
+        const m = text.match(NUM);
+        if (!animate || reduce || !m || prev === text) return;
+        const [, pre, raw, post] = m;
+        const to = parseFloat(raw.replace(/,/g, ''));
+        let from = 0;
+        if (prev) {
+          const pm = prev.match(NUM);
+          if (!pm || pm[1] !== pre || pm[3] !== post) return;
+          from = parseFloat(pm[2].replace(/,/g, ''));
+        }
+        const decimals = (raw.split('.')[1] || '').length;
+        const fmt = raw.includes(',') ? (v) => Math.round(v).toLocaleString('en-US') : (v) => v.toFixed(decimals);
+        const start = performance.now();
+        const duration = prev ? 450 : 900;
+        el.textContent = pre + fmt(from) + post;
+        (function tick(now) {
+          if (!el.isConnected) return;
+          const p = clamp((now - start) / duration, 0, 1);
+          el.textContent = pre + fmt(lerp(from, to, easeOut(p))) + post;
+          if (p < 1) requestAnimationFrame(tick);
+          else el.textContent = text;
+        })(start);
+      });
+    }
+
     function render(animate) {
       hideTip();
       view.textContent = '';
       if (state.view === 'sales') renderSales(animate);
       else if (state.view === 'inventory') renderInventory(animate);
       else renderCollections(animate);
+      countTiles(animate);
     }
 
     $$('[data-view]', dash).forEach((btn) => btn.addEventListener('click', () => {
@@ -532,6 +651,7 @@
       const once = new IntersectionObserver((entries) => {
         if (!entries[0].isIntersecting) return;
         once.disconnect();
+        lastTile.clear(); // count up from zero the first time the dashboard is seen
         render(true);
       }, { threshold: 0.25 });
       once.observe(dash);
@@ -559,7 +679,7 @@
       panels.forEach((p, n) => p.classList.toggle('is-on', n === current));
       list.style.setProperty('--p', current / (steps.length - 1));
     }
-    const stopAuto = () => { clearInterval(auto); auto = 0; };
+    const stopAuto = () => { clearInterval(auto); auto = 0; host.classList.remove('is-auto'); };
 
     steps.forEach((btn, n) => {
       btn.addEventListener('click', () => { stopAuto(); go(n); });
@@ -578,6 +698,7 @@
       new IntersectionObserver((entries) => {
         if (done) return;
         if (entries[0].isIntersecting && !auto) {
+          host.classList.add('is-auto');
           auto = setInterval(() => {
             if (current === steps.length - 1) { done = true; stopAuto(); return; }
             go(current + 1);
@@ -688,6 +809,37 @@
     divs.forEach((btn) => btn.addEventListener('click', () => { divisor = Number(btn.dataset.div); pressGroup(divs, btn); update(); }));
     drawBox(shown);
     update();
+
+    // once, on arrival, the box stretches and settles back, so it is plain
+    // that it responds. Any touch or key from the reader cancels it.
+    if (!reduce && 'IntersectionObserver' in window) {
+      let cancelled = false;
+      const cancel = () => { cancelled = true; };
+      host.addEventListener('pointerdown', cancel, { once: true });
+      host.addEventListener('keydown', cancel, { once: true });
+      const demo = () => {
+        if (cancelled) return;
+        const base = Number(inL.value);
+        const peak = Math.min(Number(inL.max), base + 45);
+        const start = performance.now();
+        const duration = 2200;
+        verdict.setAttribute('aria-live', 'off');
+        (function step(now) {
+          if (cancelled) { verdict.setAttribute('aria-live', 'polite'); return; }
+          const t = clamp((now - start) / duration, 0, 1);
+          inL.value = Math.round(lerp(base, peak, Math.sin(Math.PI * t)));
+          update();
+          if (t < 1) requestAnimationFrame(step);
+          else { inL.value = base; update(); verdict.setAttribute('aria-live', 'polite'); }
+        })(start);
+      };
+      const io = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        io.disconnect();
+        setTimeout(demo, 500);
+      }, { threshold: 0.9 });
+      io.observe($('.calc-stage', host));
+    }
   }
 
   function profit() {
@@ -742,6 +894,122 @@
   }
 
   /* ---------------------------------------------------------------------
+     Career step chart (Fig. 4). Dates match the experience list below it;
+     time in the current role is counted up to this month.
+     ------------------------------------------------------------------- */
+  function career() {
+    const fig = $('#career');
+    if (!fig) return;
+    const host = $('.career-host', fig);
+    const START = 2021; // the axis begins January 2021
+    const ROLES = [
+      { name: 'Intern, Data & Operations', y: 2021, m: 3 },
+      { name: 'Data Assistant', y: 2021, m: 6 },
+      { name: 'Data Analyst', y: 2021, m: 11 },
+      { name: 'Senior Data Analyst & Operations Lead', short: 'Senior Data Analyst & Ops Lead', y: 2023, m: 8 },
+    ];
+    const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const today = new Date();
+    const nowIdx = (today.getFullYear() - START) * 12 + today.getMonth();
+    const idx = (r) => (r.y - START) * 12 + r.m;
+    const tenure = (months) => {
+      const yr = Math.floor(months / 12), mo = months % 12;
+      return [yr ? `${yr} yr` : '', mo ? `${mo} mo` : ''].filter(Boolean).join(' ');
+    };
+    const DRAW = 1.8; // seconds, matches .career .is-drawing .step
+    let state = reduce || !('IntersectionObserver' in window) ? 'done' : 'waiting'; // waiting -> playing -> done
+
+    function draw() {
+      const W = Math.max(300, host.clientWidth || 600);
+      const rowGap = 44, top = 46;
+      const H = top + rowGap * 3 + 42;
+      const ml = 2, mr = 14;
+      const end = nowIdx + 1;
+      const x = (i) => ml + (i / end) * (W - ml - mr);
+      const yRow = (k) => top + rowGap * (3 - k);
+      const cls = state === 'done' ? '' : `is-drawing${state === 'waiting' ? ' is-paused' : ''}`;
+      const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, class: cls, 'aria-hidden': 'true' });
+
+      for (let yr = START; (yr - START) * 12 <= end; yr++) {
+        const gx = x((yr - START) * 12);
+        svg.appendChild(s('line', { class: 'grid', x1: gx, x2: gx, y1: 20, y2: H }));
+        svg.appendChild(s('text', { class: 'tick', x: gx + 4, y: 14 }, String(yr)));
+      }
+
+      const pts = ROLES.map((r, k) => [x(idx(r)), yRow(k)]);
+      const xEnd = x(end);
+      let d = `M${pts[0][0].toFixed(1)} ${pts[0][1]}`;
+      const at = [0];
+      let run = 0;
+      for (let k = 1; k < pts.length; k++) {
+        d += ` H${pts[k][0].toFixed(1)} V${pts[k][1]}`;
+        run += (pts[k][0] - pts[k - 1][0]) + (pts[k - 1][1] - pts[k][1]);
+        at.push(run);
+      }
+      d += ` H${xEnd.toFixed(1)}`;
+      const total = run + (xEnd - pts[pts.length - 1][0]);
+      svg.appendChild(s('path', { class: 'wash', d: `${d} V${H} H${pts[0][0].toFixed(1)} Z` }));
+      svg.appendChild(s('path', { class: 'step', d, pathLength: 1 }));
+
+      host.textContent = '';
+      host.appendChild(svg); // labels are measured below, so the svg must be in the page
+
+      ROLES.forEach((r, k) => {
+        const g = s('g', { class: 'lab' });
+        g.style.setProperty('--at', `${((DRAW * at[k]) / total).toFixed(2)}s`);
+        svg.appendChild(g);
+        const tx = pts[k][0] + 6, ty = pts[k][1] + 18;
+        const role = s('text', { class: 'role', x: tx, y: ty }, r.name);
+        g.appendChild(role);
+        let lines = 1;
+        const fits = () => tx + role.getComputedTextLength() <= W - 2;
+        if (!fits() && r.short) role.textContent = r.short;
+        if (!fits()) {
+          const words = (r.short || r.name).split(' ');
+          const half = Math.ceil(words.length / 2);
+          role.textContent = words.slice(0, half).join(' ');
+          g.appendChild(s('text', { class: 'role', x: tx, y: ty + 15 }, words.slice(half).join(' ')));
+          lines = 2;
+        }
+        const next = k + 1 < ROLES.length ? idx(ROLES[k + 1]) : nowIdx + 1;
+        g.appendChild(s('text', { class: 'when', x: tx, y: ty + 15 * lines }, `${MON[r.m]} ${r.y} · ${tenure(next - idx(r))}`));
+      });
+
+      const ny = yRow(3);
+      const now = s('g', { class: 'lab' });
+      now.style.setProperty('--at', `${DRAW}s`);
+      now.appendChild(s('circle', { class: 'now-ring', cx: xEnd, cy: ny, r: 4 }));
+      now.appendChild(s('circle', { class: 'now-dot', cx: xEnd, cy: ny, r: 4 }));
+      now.appendChild(s('text', { class: 'now-label', x: xEnd, y: ny - 12, 'text-anchor': 'end' }, 'Now'));
+      svg.appendChild(now);
+    }
+
+    draw();
+    whenFontsReady(() => { if (state !== 'playing') draw(); }); // re-measure labels in the real font
+
+    if (state === 'waiting') {
+      const io = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        io.disconnect();
+        state = 'playing';
+        const svg = $('svg', host);
+        if (svg) svg.classList.remove('is-paused');
+        setTimeout(() => { state = 'done'; }, (DRAW + 0.8) * 1000);
+      }, { threshold: 0.5 });
+      io.observe(host);
+    }
+
+    let lastW = host.clientWidth;
+    let timer = 0;
+    window.addEventListener('resize', () => {
+      if (Math.abs(host.clientWidth - lastW) < 4) return;
+      lastW = host.clientWidth;
+      clearTimeout(timer);
+      timer = setTimeout(() => { if (state !== 'playing') draw(); }, 150);
+    });
+  }
+
+  /* ---------------------------------------------------------------------
      Contact
      ------------------------------------------------------------------- */
   let toastTimer = 0;
@@ -779,12 +1047,13 @@
   }
 
   function init() {
+    motion();
     chrome();
-    counters();
     dashboard();
     flow();
     volumetric();
     profit();
+    career();
     contact();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
