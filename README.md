@@ -59,6 +59,20 @@ indexing of the home page was requested.
 
 After a content change, use **URL inspection → Request indexing** on the changed page.
 
+**Bing, and through it ChatGPT search and Copilot:** Microsoft would not create a Bing
+Webmaster account for the Gmail address (2026-11-23), so the site uses
+[IndexNow](https://www.indexnow.org) instead, which needs no account. The key file
+`243e9e7678994faddaa71e030c314542.txt` at the site root proves ownership; keep it. After
+changing pages, notify Bing and the other IndexNow engines:
+
+```powershell
+$body = '{"host":"deepakjatav.com","key":"243e9e7678994faddaa71e030c314542","keyLocation":"https://deepakjatav.com/243e9e7678994faddaa71e030c314542.txt","urlList":["https://deepakjatav.com/","https://deepakjatav.com/resume.html","https://deepakjatav.com/llms.txt"]}'
+Invoke-RestMethod -Method Post -Uri "https://api.indexnow.org/indexnow" -ContentType "application/json; charset=utf-8" -Body $body
+```
+
+`robots.txt` also points every crawler to the sitemap, and `llms.txt` summarises the
+site for AI tools.
+
 The structured data (`ProfilePage` JSON-LD in `index.html`) can be checked with
 Google's [Rich Results Test](https://search.google.com/test/rich-results).
 
