@@ -1,0 +1,9 @@
+# local tooling
+.claude/
+
+# old resume kept locally, not published
+DEEPAK JATAV RESUME.pdf
+
+# OS noise
+Thumbs.db
+.DS_Store
