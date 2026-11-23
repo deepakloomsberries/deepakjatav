@@ -726,6 +726,54 @@ input[type="range"]:hover::-webkit-slider-thumb, input[type="range"]:active::-we
 .motion .end-title .w > span { display: inline-block; transform: translateY(110%); transition: transform 0.8s var(--ease); transition-delay: calc(var(--i, 0) * 35ms); }
 .motion .end-title.in .w > span { transform: none; }
 
+/* ==========================================================================
+   Channels band and tools grid
+   Marketplace names are set as type (no brand logos); tool logos are open
+   Simple Icons drawn as masks, so they print in ink and take their brand
+   colour only on hover.
+   ========================================================================== */
+.channels { padding-bottom: clamp(8px, 2vw, 24px); }
+.ch-row { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: clamp(24px, 4.5vw, 72px); align-items: baseline; padding: 18px 0; border-top: 1px solid var(--rule); }
+.ch-row:last-child { border-bottom: 1px solid var(--rule); }
+.ch-label { font: 500 13px var(--f-mono); color: var(--ink-3); }
+.ch-names { display: flex; flex-wrap: wrap; gap: 4px clamp(18px, 2.6vw, 38px); }
+.ch-names li { font: 700 clamp(22px, 2.5vw, 34px)/1.15 var(--f-display); font-stretch: 84%; letter-spacing: -0.01em; }
+.ch-markets { display: flex; flex-wrap: wrap; gap: 10px 30px; font-size: 15.5px; }
+.ch-markets li { display: inline-flex; align-items: center; gap: 9px; }
+.ch-markets img { display: block; width: 24px; height: 18px; object-fit: cover; box-shadow: 0 0 0 1px var(--rule); }
+.ch-base { color: var(--ink-2); }
+
+.tools { margin-top: clamp(40px, 5vw, 64px); }
+.tools-title { font: 700 22px/1.1 var(--f-display); font-stretch: 84%; }
+.tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); margin-top: 14px; border-top: 2px solid var(--ink); }
+.tl { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 12px 10px; border-bottom: 1px solid var(--rule); font-size: 15px; font-weight: 500; line-height: 1.25; transition: background-color 0.2s; }
+.tl:hover { background: var(--plane); }
+.tl-ic { flex: none; width: 20px; height: 20px; background-color: var(--ink); -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; -webkit-mask-size: contain; mask-size: contain; transition: background-color 0.25s var(--ease), transform 0.25s var(--ease); }
+.tl:hover .tl-ic { background-color: var(--brand, var(--ink)); transform: scale(1.12); }
+.ic-googlebigquery { -webkit-mask-image: url(../logos/googlebigquery.svg); mask-image: url(../logos/googlebigquery.svg); --brand: #669df6; }
+.ic-python { -webkit-mask-image: url(../logos/python.svg); mask-image: url(../logos/python.svg); --brand: #3776ab; }
+.ic-pandas { -webkit-mask-image: url(../logos/pandas.svg); mask-image: url(../logos/pandas.svg); --brand: #150458; }
+.ic-numpy { -webkit-mask-image: url(../logos/numpy.svg); mask-image: url(../logos/numpy.svg); --brand: #013243; }
+.ic-googlesheets { -webkit-mask-image: url(../logos/googlesheets.svg); mask-image: url(../logos/googlesheets.svg); --brand: #34a853; }
+.ic-googleappsscript { -webkit-mask-image: url(../logos/googleappsscript.svg); mask-image: url(../logos/googleappsscript.svg); --brand: #4285f4; }
+.ic-git { -webkit-mask-image: url(../logos/git.svg); mask-image: url(../logos/git.svg); --brand: #f03c2e; }
+.ic-github { -webkit-mask-image: url(../logos/github.svg); mask-image: url(../logos/github.svg); --brand: #181717; }
+.ic-flask { -webkit-mask-image: url(../logos/flask.svg); mask-image: url(../logos/flask.svg); --brand: #3babc3; }
+.ic-nextdotjs { -webkit-mask-image: url(../logos/nextdotjs.svg); mask-image: url(../logos/nextdotjs.svg); --brand: #000000; }
+.ic-linux { -webkit-mask-image: url(../logos/linux.svg); mask-image: url(../logos/linux.svg); --brand: #c99a00; }
+.ic-apache { -webkit-mask-image: url(../logos/apache.svg); mask-image: url(../logos/apache.svg); --brand: #d22128; }
+.ic-jira { -webkit-mask-image: url(../logos/jira.svg); mask-image: url(../logos/jira.svg); --brand: #0052cc; }
+.ic-zendesk { -webkit-mask-image: url(../logos/zendesk.svg); mask-image: url(../logos/zendesk.svg); --brand: #03363d; }
+
+@media (max-width: 1080px) {
+  .ch-row { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+}
+@media (max-width: 600px) {
+  .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl { min-height: 48px; gap: 8px; padding: 10px 6px; font-size: 14px; }
+  .tl-ic { width: 18px; height: 18px; }
+}
+
 @media print {
   .progress { display: none; }
   .motion .rise, .motion .side-no, .motion .side-note { opacity: 1 !important; transform: none !important; }

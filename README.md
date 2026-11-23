@@ -14,6 +14,9 @@ Personal portfolio and resume of Deepak Jatav, Senior Data Analyst & Operations 
 | `assets/js/main.js` | Sample dashboards, order-to-cash stepper, calculators |
 | `resume.html` | Resume source, also readable online |
 | `assets/Deepak_Jatav_Resume.pdf` | The downloadable 2-page ATS-friendly resume |
+| `assets/logos/` | Tool logos from [Simple Icons](https://simpleicons.org) 16.38.1 (CC0); marketplace names are set as text, not logos |
+| `assets/flags/` | Saudi Arabia, UAE and India flags from [flag-icons](https://flagicons.lipis.dev) 7.6.0 (MIT) |
+| `sitemap.xml` | Page list for search engines; update `lastmod` when content changes |
 
 Plain HTML, CSS and JavaScript. No build step and no dependencies, so GitHub Pages serves it as is.
 
@@ -41,6 +44,18 @@ The live site updates about a minute later.
    ```
 
 3. Check that it is still two pages, then commit and push.
+
+## Search engines
+
+1. In [Google Search Console](https://search.google.com/search-console), add a
+   **URL prefix** property for `https://deepakloomsberries.github.io/deepakjatav/`.
+2. Choose **HTML tag** verification, put the `<meta name="google-site-verification">`
+   tag it gives you in the `<head>` of `index.html`, publish, then press Verify.
+3. Under **Sitemaps**, submit `sitemap.xml`, and use **URL inspection** to request
+   indexing of the home page.
+
+The structured data (`ProfilePage` JSON-LD in `index.html`) can be checked with
+Google's [Rich Results Test](https://search.google.com/test/rich-results).
 
 ## Custom domain
 
