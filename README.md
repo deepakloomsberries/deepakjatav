@@ -3,7 +3,7 @@
 Personal portfolio and resume of Deepak Jatav, Senior Data Analyst & Operations Lead
 (e-commerce marketplaces, supply chain and ERP across Saudi Arabia and the UAE).
 
-**Live site:** https://deepakloomsberries.github.io/deepakjatav/
+**Live site:** https://deepakjatav.com/ (the old https://deepakloomsberries.github.io/deepakjatav/ address redirects there)
 
 ## What is here
 
@@ -48,18 +48,30 @@ The live site updates about a minute later.
 ## Search engines
 
 1. In [Google Search Console](https://search.google.com/search-console), add a
-   **URL prefix** property for `https://deepakloomsberries.github.io/deepakjatav/`.
-2. Choose **HTML tag** verification, put the `<meta name="google-site-verification">`
-   tag it gives you in the `<head>` of `index.html`, publish, then press Verify.
-3. Under **Sitemaps**, submit `sitemap.xml`, and use **URL inspection** to request
-   indexing of the home page.
+   **Domain** property for `deepakjatav.com`.
+2. It asks for a `TXT` record: add it in Cloudflare under **DNS → Records** for
+   deepakjatav.com, then press Verify.
+3. Under **Sitemaps**, submit `https://deepakjatav.com/sitemap.xml`, and use
+   **URL inspection** to request indexing of the home page.
 
 The structured data (`ProfilePage` JSON-LD in `index.html`) can be checked with
 Google's [Rich Results Test](https://search.google.com/test/rich-results).
 
 ## Custom domain
 
-When a domain is bought: add it under **Settings → Pages → Custom domain** in this
-repository, and point the domain's DNS at GitHub Pages (a `CNAME` record for `www`
-to `deepakloomsberries.github.io`, plus GitHub's four `A` records for the root domain).
-Then update the `canonical` and `og:url` links at the top of `index.html`.
+`deepakjatav.com` is registered at Cloudflare (bought 2026-11-23), which also runs its DNS.
+The `CNAME` file in this repository tells GitHub Pages to serve the site on that domain.
+
+DNS records in Cloudflare, all set to **DNS only** (grey cloud), so GitHub can issue
+the HTTPS certificate:
+
+| Type | Name | Content |
+| --- | --- | --- |
+| `A` | `@` | `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` (one record each) |
+| `CNAME` | `www` | `deepakloomsberries.github.io` |
+| `TXT` | `_github-pages-challenge-deepakloomsberries` | GitHub's domain-verification code |
+
+Optional IPv6 `AAAA` records for `@` (`2606:50c0:8000::153` to `2606:50c0:8003::153`) are not
+added; GitHub Pages works without them.
+
+Renewal is in the Cloudflare dashboard under **Domains → Registrations**; keep auto-renew on.
