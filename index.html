@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- ?v= must change on every publish: GitHub Pages lets browsers reuse files for 10 minutes -->
-<link rel="stylesheet" href="assets/css/style.css?v=2026-11-23.3">
+<link rel="stylesheet" href="assets/css/style.css?v=2026-11-23.4">
 <script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('ready')},2500);</script>
 
 <script type="application/ld+json">
@@ -131,7 +131,7 @@
     <div><dt><span data-count="7">7</span>+</dt><dd>marketplaces reported on, end to end</dd></div>
     <div><dt><span data-count="6">6</span></dt><dd>analysts I lead and review</dd></div>
     <div><dt><span data-count="3000" data-sep>3,000</span>+</dt><dd>SKUs under automated price tracking</dd></div>
-    <div><dt><span data-count="0" data-from="40">0</span></dt><dd>mismatches at month-end close</dd></div>
+    <div><dt><span data-count="60000" data-sep>60,000</span>+</dt><dd>orders a year, reconciled channel by channel</dd></div>
   </dl>
 </section>
 
@@ -151,9 +151,18 @@
         <h3>Channel reconciliation portal</h3>
         <dl class="pso">
           <div><dt>Problem</dt><dd>Every marketplace pays on its own schedule, in its own report format, net of its own fees. Matching orders to settlements lived in spreadsheets, and so did the answer to a simple question: what does this item actually earn on each channel?</dd></div>
-          <div><dt>What I built</dt><dd>A web portal the whole team works in. It reconciles marketplace and B2B orders against their settlements channel by channel, across Amazon, Noon, Namshi and Trendyol, with order search and sales and profit views. Around that sit prices and margins per channel after fees and cost, stock sync between warehouse and listings, a bundle master, B2B receivables, and a credit-note creator that exports straight into Ginesys ERP.</dd></div>
-          <div><dt>Result</dt><dd>Every order is matched to its settlement, and the monthly books close in Ginesys ERP with zero mismatches.</dd></div>
+          <div><dt>What I built</dt><dd>A web portal the whole team works in. It reconciles orders against their settlements and Ginesys ERP channel by channel, across Noon, Amazon, Trendyol, Namshi, Home Centre, Centrepoint, the brand's own website and B2B, with order search and sales and profit views. It reads 25 data sources, from hourly Ginesys reports to the Noon and Trendyol APIs, and runs on a schedule every evening. Around that sit prices and margins per channel after fees and cost, stock sync between warehouse and listings, a bundle master, B2B receivables, and a credit-note creator that exports straight into Ginesys ERP.</dd></div>
+          <div><dt>Result</dt><dd>Reconciliation moved out of spreadsheets and into one place. 96% of sales now match Ginesys ERP automatically, and the rest become exceptions with the reason attached. None of the open ones is older than 30 days.</dd></div>
         </dl>
+        <div class="case-nums">
+          <dl>
+            <div><dt><span data-count="9">9</span></dt><dd>sales channels, B2B included</dd></div>
+            <div><dt><span data-count="96">96</span>%</dt><dd>of sales matched automatically</dd></div>
+            <div><dt><span data-count="25">25</span></dt><dd>data sources feeding it</dd></div>
+            <div><dt><span data-count="11">11</span></dt><dd>active users across the company</dd></div>
+          </dl>
+          <p class="case-src">From the portal's own dashboards, November 2026.</p>
+        </div>
         <p class="case-stack">Python, JavaScript, Google Sheets, marketplace APIs</p>
         <a class="link-arrow" href="https://reco.donetella.com/#/" target="_blank" rel="noopener">reco.donetella.com <span aria-hidden="true">&nearr;</span> <small>login required</small></a>
       </div>
@@ -336,7 +345,7 @@
         </article>
         <article class="flow-panel" data-panel="5">
           <h3>Reconciled and closed</h3>
-          <p>Every order is matched to its settlement. The books close in Ginesys ERP with zero mismatches, and the sales and returns data goes out audit-ready for Saudi Arabia VAT filing.</p>
+          <p>Each order is matched to its settlement and to Ginesys ERP. Anything that does not match becomes an exception with a reason attached, and is worked until it clears. The sales and returns data then goes out audit-ready for Saudi Arabia VAT filing.</p>
           <p class="flow-data"><b>What I measure here</b> Orders matched, open differences, month-end close status.</p>
         </article>
       </div>
@@ -451,8 +460,8 @@
             <li>Lead analytics and BI for a brand selling on 7+ marketplaces in Saudi Arabia and the UAE, and manage a team of 6 analysts.</li>
             <li>Designed and run the BigQuery warehouse holding 5+ years of sales, ads, inventory and payments data, with automated Looker Studio dashboards on top.</li>
             <li>Analyse price, margin and profit by channel after commission, shipping, VAT and returns.</li>
-            <li>Built four internal tools: the reconciliation portal, a price tracker, a B2B ordering app and a task manager.</li>
-            <li>Reconcile 100% of orders against settlements and close the monthly books in Ginesys ERP with zero mismatches.</li>
+            <li>Built four internal tools: the reconciliation portal (11 active users), a price tracker, a B2B ordering app and a task manager.</li>
+            <li>Reconcile 60,000+ orders a year across 9 sales channels against settlements and Ginesys ERP. 96% match automatically, and no open exception is older than 30 days.</li>
           </ul>
         </div>
       </li>
@@ -553,6 +562,6 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/main.js?v=2026-11-23.3" defer></script>
+<script src="assets/js/main.js?v=2026-11-23.4" defer></script>
 </body>
 </html>

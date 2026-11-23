@@ -159,7 +159,7 @@
     }
 
     const tag = (sel, cls) => $$(sel).forEach((el) => el.classList.add(cls));
-    tag('.more-list li, .xp > li, .kit > div, .calc, .end .mail, .end-links, .end-foot', 'rise');
+    tag('.case-nums dl > div, .more-list li, .xp > li, .kit > div, .calc, .end .mail, .end-links, .end-foot', 'rise');
     tag('.pso > div, .flow-panels, .xp, .kit, .verdict', 'draw-rule');
 
     const io = new IntersectionObserver((entries) => {
@@ -173,22 +173,34 @@
     $$('.side, .rise, .draw-rule, .case-fig, .end-title').forEach((el) => io.observe(el));
   }
 
-  /* counters in the hero facts strip */
+  /* a figure that runs up to its value: [data-count], optional data-from, data-sep */
+  function runCount(el, delay) {
+    const to = Number(el.dataset.count);
+    const from = Number(el.dataset.from || 0);
+    const fmt = (v) => ('sep' in el.dataset ? v.toLocaleString('en-US') : String(v));
+    if (reduce) { el.textContent = fmt(to); return; }
+    const start = performance.now() + delay;
+    const duration = 1300;
+    el.textContent = fmt(from);
+    (function tick(now) {
+      const t = clamp((now - start) / duration, 0, 1);
+      el.textContent = fmt(Math.round(lerp(from, to, easeOut(t))));
+      if (t < 1) requestAnimationFrame(tick);
+    })(performance.now());
+  }
+
+  /* hero facts count with the intro; figures further down count when they come into view */
   function counters() {
-    $$('[data-count]').forEach((el) => {
-      const to = Number(el.dataset.count);
-      const from = Number(el.dataset.from || 0);
-      const fmt = (v) => ('sep' in el.dataset ? v.toLocaleString('en-US') : String(v));
-      if (reduce) { el.textContent = fmt(to); return; }
-      const start = performance.now() + 700;
-      const duration = 1300;
-      el.textContent = fmt(from);
-      (function tick(now) {
-        const t = clamp((now - start) / duration, 0, 1);
-        el.textContent = fmt(Math.round(lerp(from, to, easeOut(t))));
-        if (t < 1) requestAnimationFrame(tick);
-      })(performance.now());
-    });
+    $$('.facts [data-count]').forEach((el) => runCount(el, 700));
+    if (reduce || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        io.unobserve(entry.target);
+        $$('[data-count]', entry.target).forEach((el) => runCount(el, 150));
+      });
+    }, { rootMargin: '0px 0px -10% 0px' });
+    $$('.case-nums').forEach((el) => io.observe(el));
   }
 
   /* ---------------------------------------------------------------------
