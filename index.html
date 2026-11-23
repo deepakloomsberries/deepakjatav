@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- ?v= must change on every publish: GitHub Pages lets browsers reuse files for 10 minutes -->
-<link rel="stylesheet" href="assets/css/style.css?v=2026-11-23.6">
+<link rel="stylesheet" href="assets/css/style.css?v=2026-11-23.7">
 <script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('ready')},2500);</script>
 
 <!-- ProfilePage tells search engines this page is about one person; keep facts in step with the visible page -->
@@ -149,15 +149,28 @@
 <section class="channels wrap" id="channels" aria-label="Channels and markets" data-section>
   <div class="ch-row">
     <h2 class="ch-label">Channels I report on</h2>
-    <ul class="ch-names">
-      <li>Amazon</li>
-      <li>Noon</li>
-      <li>Namshi</li>
-      <li>Trendyol</li>
-      <li>Zid</li>
-      <li>Home Centre</li>
-      <li>Centrepoint</li>
-    </ul>
+    <!-- Logos are trademarks of their owners, shown to name the channels reported on.
+         The list is repeated once (aria-hidden) so the strip can loop without a gap. -->
+    <div class="ch-marquee">
+      <ul class="ch-track">
+        <li><img src="assets/channels/amazon.svg" alt="Amazon" width="96" height="29"></li>
+        <li><img src="assets/channels/noon.svg" alt="Noon" width="73" height="34"></li>
+        <li><img src="assets/channels/namshi.svg" alt="Namshi" width="86" height="23"></li>
+        <li><img src="assets/channels/trendyol.svg" alt="Trendyol" width="84" height="34"></li>
+        <li><img src="assets/channels/zid.svg" alt="Zid" width="72" height="28"></li>
+        <li><img class="lg-pale" src="assets/channels/homecentre.svg" alt="Home Centre" width="169" height="18"></li>
+        <li><img src="assets/channels/centrepoint.svg" alt="Centrepoint" width="159" height="24"></li>
+      </ul>
+      <ul class="ch-track" aria-hidden="true">
+        <li><img src="assets/channels/amazon.svg" alt="" width="96" height="29"></li>
+        <li><img src="assets/channels/noon.svg" alt="" width="73" height="34"></li>
+        <li><img src="assets/channels/namshi.svg" alt="" width="86" height="23"></li>
+        <li><img src="assets/channels/trendyol.svg" alt="" width="84" height="34"></li>
+        <li><img src="assets/channels/zid.svg" alt="" width="72" height="28"></li>
+        <li><img class="lg-pale" src="assets/channels/homecentre.svg" alt="" width="169" height="18"></li>
+        <li><img src="assets/channels/centrepoint.svg" alt="" width="159" height="24"></li>
+      </ul>
+    </div>
   </div>
   <div class="ch-row">
     <h3 class="ch-label">Markets</h3>
@@ -624,6 +637,6 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/main.js?v=2026-11-23.6" defer></script>
+<script src="assets/js/main.js?v=2026-11-23.7" defer></script>
 </body>
 </html>

@@ -736,8 +736,25 @@ input[type="range"]:hover::-webkit-slider-thumb, input[type="range"]:active::-we
 .ch-row { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: clamp(24px, 4.5vw, 72px); align-items: baseline; padding: 18px 0; border-top: 1px solid var(--rule); }
 .ch-row:last-child { border-bottom: 1px solid var(--rule); }
 .ch-label { font: 500 13px var(--f-mono); color: var(--ink-3); }
-.ch-names { display: flex; flex-wrap: wrap; gap: 4px clamp(18px, 2.6vw, 38px); }
-.ch-names li { font: 700 clamp(22px, 2.5vw, 34px)/1.15 var(--f-display); font-stretch: 84%; letter-spacing: -0.01em; }
+/* channel logos: a slow strip running right to left, grey until pointed at.
+   Two identical tracks move together, so the loop has no seam. */
+.ch-row:has(.ch-marquee) { align-items: center; }
+.ch-marquee { display: flex; min-width: 0; overflow: hidden; padding: 6px 0; -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+.ch-track { display: flex; flex: none; align-items: center; gap: clamp(40px, 5vw, 72px); padding-right: clamp(40px, 5vw, 72px); animation: ch-scroll 36s linear infinite; }
+.ch-marquee:hover .ch-track { animation-play-state: paused; }
+.ch-track img { display: block; width: auto; max-width: none; filter: grayscale(1); opacity: 0.68; transition: filter 0.3s, opacity 0.3s, transform 0.3s var(--ease); }
+.ch-track img.lg-pale { filter: grayscale(1) brightness(0.42); } /* light-green logo would otherwise grey out to near-invisible */
+.ch-track li:hover img { filter: none; opacity: 1; transform: scale(1.06); }
+@keyframes ch-scroll { to { transform: translateX(-100%); } }
+@media (max-width: 600px) {
+  .ch-track img { transform: scale(0.85); }
+  .ch-track li:hover img { transform: scale(0.9); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ch-marquee { -webkit-mask-image: none; mask-image: none; }
+  .ch-track { flex-wrap: wrap; flex: 1 1 auto; row-gap: 20px; padding-right: 0; animation: none !important; }
+  .ch-track[aria-hidden="true"] { display: none; }
+}
 .ch-markets { display: flex; flex-wrap: wrap; gap: 10px 30px; font-size: 15.5px; }
 .ch-markets li { display: inline-flex; align-items: center; gap: 9px; }
 .ch-markets img { display: block; width: 24px; height: 18px; object-fit: cover; box-shadow: 0 0 0 1px var(--rule); }

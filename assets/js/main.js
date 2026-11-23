@@ -159,7 +159,7 @@
     }
 
     const tag = (sel, cls) => $$(sel).forEach((el) => el.classList.add(cls));
-    tag('.ch-names li, .ch-markets li, .tl, .case-nums dl > div, .more-list li, .xp > li, .kit > div, .calc, .end .mail, .end-links, .end-foot', 'rise');
+    tag('.ch-marquee, .ch-markets li, .tl, .case-nums dl > div, .more-list li, .xp > li, .kit > div, .calc, .end .mail, .end-links, .end-foot', 'rise');
     tag('.pso > div, .flow-panels, .xp, .kit, .verdict', 'draw-rule');
 
     const io = new IntersectionObserver((entries) => {
