@@ -47,12 +47,14 @@ The live site updates about a minute later.
 
 ## Search engines
 
-1. In [Google Search Console](https://search.google.com/search-console), add a
-   **Domain** property for `deepakjatav.com`.
-2. It asks for a `TXT` record: add it in Cloudflare under **DNS → Records** for
-   deepakjatav.com, then press Verify.
-3. Under **Sitemaps**, submit `https://deepakjatav.com/sitemap.xml`, and use
-   **URL inspection** to request indexing of the home page.
+Set up on 2026-11-23: [Google Search Console](https://search.google.com/search-console)
+has a **Domain** property for `deepakjatav.com`, owned by Deepak's personal Gmail
+(not the work account). It is verified by a `google-site-verification=…` `TXT` record
+on `@` in Cloudflare; **do not delete that record**, or verification is lost.
+`https://deepakjatav.com/sitemap.xml` is submitted (read successfully, 2 pages) and
+indexing of the home page was requested.
+
+After a content change, use **URL inspection → Request indexing** on the changed page.
 
 The structured data (`ProfilePage` JSON-LD in `index.html`) can be checked with
 Google's [Rich Results Test](https://search.google.com/test/rich-results).
@@ -70,6 +72,7 @@ the HTTPS certificate:
 | `A` | `@` | `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` (one record each) |
 | `CNAME` | `www` | `deepakloomsberries.github.io` |
 | `TXT` | `_github-pages-challenge-deepakloomsberries` | GitHub's domain-verification code |
+| `TXT` | `@` | Google Search Console's `google-site-verification=…` code |
 
 Optional IPv6 `AAAA` records for `@` (`2606:50c0:8000::153` to `2606:50c0:8003::153`) are not
 added; GitHub Pages works without them.
