@@ -743,6 +743,32 @@
   function pressGroup(buttons, active) {
     buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === active)));
   }
+  /* sets a value label if the page has it (the calculator pages use number boxes instead) */
+  function put(sel, value) {
+    const el = $(sel);
+    if (el) el.textContent = value;
+  }
+  /* calculator pages: a number box beside each slider (input.num[data-for]), kept in step both ways */
+  function syncNumbers(host) {
+    $$('input.num[data-for]', host).forEach((n) => {
+      if (document.activeElement === n) return; // don't overwrite what the reader is typing
+      const r = $(`#${n.dataset.for}`);
+      if (r) n.value = r.value;
+    });
+  }
+  function numberInputs() {
+    $$('input.num[data-for]').forEach((n) => {
+      const r = $(`#${n.dataset.for}`);
+      if (!r) return;
+      n.addEventListener('input', () => {
+        const v = parseFloat(n.value);
+        if (Number.isNaN(v)) return;
+        r.value = String(clamp(v, Number(r.min), Number(r.max)));
+        r.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+      n.addEventListener('change', () => { n.value = r.value; }); // show the value actually used
+    });
+  }
 
   function volumetric() {
     const host = $('#volCalc');
@@ -794,10 +820,10 @@
       const vol = (l * w * hgt) / divisor;
       const charge = Math.max(vol, kg);
 
-      $('#volLOut').textContent = l;
-      $('#volWOut').textContent = w;
-      $('#volHOut').textContent = hgt;
-      $('#volKgOut').textContent = kg.toFixed(1);
+      put('#volLOut', l);
+      put('#volWOut', w);
+      put('#volHOut', hgt);
+      put('#volKgOut', kg.toFixed(1));
       [inL, inW, inH, inKg].forEach(paintRange);
 
       target.l = l; target.w = w; target.h = hgt;
@@ -814,6 +840,7 @@
         ? `Billed on volume. You are paying for ${(vol - kg).toFixed(1)} kg of air.`
         : 'Billed on actual weight. The box is packed tight enough.';
       verdict.classList.toggle('is-air', vol > kg);
+      syncNumbers(host);
     }
 
     [inL, inW, inH, inKg].forEach((input) => input.addEventListener('input', update));
@@ -824,7 +851,8 @@
 
     // once, on arrival, the box stretches and settles back, so it is plain
     // that it responds. Any touch or key from the reader cancels it.
-    if (!reduce && 'IntersectionObserver' in window) {
+    // (not on the calculator pages, which have number boxes: people arrive there to type)
+    if (!reduce && 'IntersectionObserver' in window && !$('input.num', host)) {
       let cancelled = false;
       const cancel = () => { cancelled = true; };
       host.addEventListener('pointerdown', cancel, { once: true });
@@ -873,10 +901,10 @@
       const gain = price - vat - comm - ship - cost;
       const margin = net > 0 ? (gain / net) * 100 : 0;
 
-      $('#pPriceOut').textContent = price;
-      $('#pCommPctOut').textContent = rate;
-      $('#pShipOut').textContent = ship;
-      $('#pCostOut').textContent = cost;
+      put('#pPriceOut', price);
+      put('#pCommPctOut', rate);
+      put('#pShipOut', ship);
+      put('#pCostOut', cost);
       [inPrice, inPct, inShip, inCost].forEach(paintRange);
       $$('.cur', host).forEach((c) => { c.textContent = market.cur; });
 
@@ -896,6 +924,7 @@
       tween($('#pProfitBig'), gain, 2);
       tween($('#pMargin'), margin, 1);
       verdict.classList.toggle('is-bad', gain < 0);
+      syncNumbers(host);
     }
     function sumObj(o) { return Object.values(o).reduce((a, b) => a + b, 0); }
 
@@ -1063,6 +1092,7 @@
     chrome();
     dashboard();
     flow();
+    numberInputs();
     volumetric();
     profit();
     career();

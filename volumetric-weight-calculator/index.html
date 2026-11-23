@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Volumetric Weight Calculator (cm to kg) | Deepak Jatav</title>
+<meta name="description" content="Free volumetric weight calculator. Enter a parcel's length, width and height in cm and its actual weight in kg to see the chargeable weight a courier bills, with divisors 5000, 6000 and 4000.">
+<meta name="author" content="Deepak Jatav">
+<meta name="theme-color" content="#fcfcfb">
+<link rel="canonical" href="https://deepakjatav.com/volumetric-weight-calculator/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Deepak Jatav">
+<meta property="og:title" content="Volumetric Weight Calculator (cm to kg)">
+<meta property="og:description" content="See whether a courier bills your parcel on actual or volumetric weight, and how much of it is air.">
+<meta property="og:url" content="https://deepakjatav.com/volumetric-weight-calculator/">
+<meta property="og:image" content="https://deepakjatav.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- ?v= must change on every publish, and match index.html -->
+<link rel="stylesheet" href="../assets/css/style.css?v=2026-11-23.8">
+<script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('ready')},2500);</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Volumetric weight calculator",
+      "url": "https://deepakjatav.com/volumetric-weight-calculator/",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Any, runs in the browser",
+      "description": "Works out a parcel's volumetric weight from its length, width and height in centimetres and compares it with the actual weight to give the chargeable weight.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Deepak Jatav", "url": "https://deepakjatav.com/" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Deepak Jatav", "item": "https://deepakjatav.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Volumetric weight calculator", "item": "https://deepakjatav.com/volumetric-weight-calculator/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What is volumetric weight?", "acceptedAnswer": { "@type": "Answer", "text": "Volumetric weight, also called dimensional weight, is a weight worked out from a parcel's size rather than its mass. Couriers use it because a large, light parcel takes up as much space on a van or plane as a heavy one." } },
+        { "@type": "Question", "name": "How do I calculate volumetric weight in kg?", "acceptedAnswer": { "@type": "Answer", "text": "Multiply length, width and height in centimetres and divide by the courier's divisor. A 60 × 40 × 40 cm box with a divisor of 5000 has a volumetric weight of 96,000 ÷ 5000 = 19.2 kg." } },
+        { "@type": "Question", "name": "What is chargeable weight?", "acceptedAnswer": { "@type": "Answer", "text": "Chargeable weight is the weight you are billed on: the higher of the actual weight and the volumetric weight." } },
+        { "@type": "Question", "name": "Which divisor should I use?", "acceptedAnswer": { "@type": "Answer", "text": "Use the divisor on your courier's rate card. 5000 is common for international express services and 6000 is the IATA standard for air cargo; some services use other values, such as 4000." } },
+        { "@type": "Question", "name": "How can I reduce volumetric weight?", "acceptedAnswer": { "@type": "Answer", "text": "Ship in the smallest box the product fits, avoid empty space and filler, and compress soft goods such as pillows, comforters and towels, for example by vacuum packing." } }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#calculator">Skip to the calculator</a>
+
+<header class="top" id="top">
+  <div class="wrap top-row">
+    <a class="top-name" href="../">Deepak Jatav</a>
+    <nav class="top-nav" id="topNav" aria-label="Primary">
+      <a href="../#work">Work</a>
+      <a href="../#dashboards">Dashboards</a>
+      <a href="../#process">Process</a>
+      <a href="../#calculators">Calculators</a>
+      <a href="../#experience">Experience</a>
+      <a href="../#contact">Contact</a>
+    </nav>
+    <a class="btn btn-solid top-cta" href="../assets/Deepak_Jatav_Resume.pdf" download="Deepak_Jatav_Resume.pdf" data-resume>Résumé <span aria-hidden="true">&darr;</span></a>
+    <button class="top-menu" id="menuBtn" type="button" aria-expanded="false" aria-controls="topNav">Menu</button>
+  </div>
+  <div class="progress" aria-hidden="true"><i id="progress"></i></div>
+</header>
+
+<main>
+
+<section class="tool-hero wrap">
+  <p class="tool-crumbs"><a href="../">Deepak Jatav</a><span aria-hidden="true">/</span><a href="../#calculators">Calculators</a></p>
+  <h1 class="tool-title">Volumetric weight calculator</h1>
+  <p class="tool-lede">Couriers bill whichever is higher: a parcel's actual weight or its volumetric weight. Enter the box size in centimetres and the actual weight in kilograms to see the chargeable weight, and how much of it is air.</p>
+</section>
+
+<section class="tool-body wrap" id="calculator">
+  <div class="tool-grid">
+
+    <article class="calc" id="volCalc" aria-label="Volumetric weight calculator">
+      <div class="calc-stage">
+        <svg class="isobox" id="isoBox" viewBox="0 0 300 200" aria-hidden="true"></svg>
+        <div class="readout">
+          <div class="readout-row"><span>Actual</span><span class="meter"><i id="volBarActual"></i></span><b><span id="volActualOut">8.0</span> kg</b></div>
+          <div class="readout-row"><span>Volumetric</span><span class="meter"><i class="on" id="volBarVol"></i></span><b><span id="volVolOut">19.2</span> kg</b></div>
+          <p class="formula" id="volFormula">(60 × 40 × 40) ÷ 5000 = 19.2 kg</p>
+        </div>
+      </div>
+
+      <div class="inputs">
+        <label class="slider"><span>Length <b><input class="num" type="number" data-for="volL" min="1" max="200" step="1" value="60" inputmode="decimal"> cm</b></span><input type="range" id="volL" min="1" max="200" value="60" aria-label="Length in centimetres"></label>
+        <label class="slider"><span>Width <b><input class="num" type="number" data-for="volW" min="1" max="200" step="1" value="40" inputmode="decimal"> cm</b></span><input type="range" id="volW" min="1" max="200" value="40" aria-label="Width in centimetres"></label>
+        <label class="slider"><span>Height <b><input class="num" type="number" data-for="volH" min="1" max="200" step="1" value="40" inputmode="decimal"> cm</b></span><input type="range" id="volH" min="1" max="200" value="40" aria-label="Height in centimetres"></label>
+        <label class="slider"><span>Actual weight <b><input class="num" type="number" data-for="volKg" min="0.1" max="100" step="0.1" value="8" inputmode="decimal"> kg</b></span><input type="range" id="volKg" min="0.1" max="100" step="0.1" value="8" aria-label="Actual weight in kilograms"></label>
+      </div>
+
+      <div class="seg" role="group" aria-label="Volumetric divisor">
+        <span class="seg-label">Divisor</span>
+        <button type="button" aria-pressed="true" data-div="5000">5000</button>
+        <button type="button" aria-pressed="false" data-div="6000">6000</button>
+        <button type="button" aria-pressed="false" data-div="4000">4000</button>
+      </div>
+
+      <div class="verdict" id="volVerdict" aria-live="polite">
+        <span class="verdict-label">Chargeable weight</span>
+        <b class="verdict-num"><span id="volChargeOut">19.2</span> kg</b>
+        <p id="volVerdictText">Billed on volume. You are paying for 11.2 kg of air.</p>
+      </div>
+    </article>
+
+    <div class="tool-notes">
+      <h2>How it is worked out</h2>
+      <p class="formula-big">Volumetric weight (kg) = length × width × height (cm) ÷ divisor</p>
+      <p>The courier compares that figure with what the parcel actually weighs and bills you on the higher of the two. That higher figure is the <b>chargeable weight</b>.</p>
+
+      <h3>Which divisor?</h3>
+      <table class="tool-table">
+        <thead><tr><th scope="col">Divisor</th><th scope="col">Where you'll usually see it</th></tr></thead>
+        <tbody>
+          <tr><td>5000</td><td>Common for international express services</td></tr>
+          <tr><td>6000</td><td>The IATA standard for air cargo, and used by some economy services</td></tr>
+          <tr><td>4000</td><td>Some services that price space more heavily</td></tr>
+        </tbody>
+      </table>
+      <p>The divisor is set by the courier and the service, so check your rate card. A smaller divisor gives a higher volumetric weight.</p>
+
+      <h3>A worked example</h3>
+      <p>A comforter packed in a 60 × 40 × 40 cm box weighs 8 kg. Its volume is 96,000 cm³, so with a divisor of 5000 its volumetric weight is 19.2 kg. The courier bills 19.2 kg, which means 11.2 kg of the charge is for air. Vacuum-pack the same comforter into a 40 × 30 × 20 cm box and the volumetric weight drops to 4.8 kg, so it is billed on its actual 8 kg.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="tool-faq wrap">
+  <h2 class="tool-h2">Questions</h2>
+  <dl class="faq">
+    <div><dt>What is volumetric weight?</dt><dd>Volumetric weight, also called dimensional weight, is a weight worked out from a parcel's size rather than its mass. Couriers use it because a large, light parcel takes up as much space on a van or plane as a heavy one.</dd></div>
+    <div><dt>How do I calculate volumetric weight in kg?</dt><dd>Multiply length, width and height in centimetres and divide by the courier's divisor. A 60 × 40 × 40 cm box with a divisor of 5000 has a volumetric weight of 96,000 ÷ 5000 = 19.2 kg.</dd></div>
+    <div><dt>What is chargeable weight?</dt><dd>Chargeable weight is the weight you are billed on: the higher of the actual weight and the volumetric weight.</dd></div>
+    <div><dt>Which divisor should I use?</dt><dd>Use the divisor on your courier's rate card. 5000 is common for international express services and 6000 is the IATA standard for air cargo; some services use other values, such as 4000.</dd></div>
+    <div><dt>How can I reduce volumetric weight?</dt><dd>Ship in the smallest box the product fits, avoid empty space and filler, and compress soft goods such as pillows, comforters and towels, for example by vacuum packing.</dd></div>
+  </dl>
+</section>
+
+<section class="tool-author wrap">
+  <div class="tool-author-in">
+    <p class="tool-author-k">Built by</p>
+    <p class="tool-author-t"><a href="../">Deepak Jatav</a>, analytics and BI lead in Bengaluru. I audit courier invoices against actual and volumetric weight, and reconcile 60,000+ marketplace orders a year for a brand selling across Saudi Arabia and the UAE.</p>
+    <p class="tool-author-links"><a class="link-arrow" href="../">See my work <span aria-hidden="true">&rarr;</span></a><a class="link-arrow" href="../marketplace-profit-calculator/">Marketplace profit calculator <span aria-hidden="true">&rarr;</span></a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="tool-foot wrap">
+  <span>&copy; <span id="year">2026</span> Deepak Jatav</span>
+  <a href="../">deepakjatav.com</a>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../assets/js/main.js?v=2026-11-23.8" defer></script>
+</body>
+</html>

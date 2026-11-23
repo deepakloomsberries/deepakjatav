@@ -17,6 +17,8 @@ The interactive dashboards on the site use sample data, not company figures.
 ## Pages
 
 - [Portfolio](https://deepakjatav.com/): case studies, sample dashboards, an order-to-cash walkthrough, two e-commerce calculators and experience
+- [Volumetric weight calculator](https://deepakjatav.com/volumetric-weight-calculator/): chargeable weight from box size and actual weight, divisors 5000, 6000 and 4000
+- [Marketplace profit calculator](https://deepakjatav.com/marketplace-profit-calculator/): profit and net margin for a sale in Saudi Arabia (15% VAT) or the UAE (5% VAT)
 - [Résumé, web version](https://deepakjatav.com/resume.html)
 - [Résumé, PDF](https://deepakjatav.com/assets/Deepak_Jatav_Resume.pdf)
 

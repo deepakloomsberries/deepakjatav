@@ -10,6 +10,8 @@ Personal portfolio and resume of Deepak Jatav, Senior Data Analyst & Operations 
 | Path | Purpose |
 | --- | --- |
 | `index.html` | The portfolio (single page) |
+| `volumetric-weight-calculator/` | Standalone volumetric weight calculator page, for search traffic |
+| `marketplace-profit-calculator/` | Standalone marketplace profit calculator page (KSA and UAE VAT), for search traffic |
 | `assets/css/style.css` | All styling and CSS animation |
 | `assets/js/main.js` | Sample dashboards, order-to-cash stepper, calculators |
 | `resume.html` | Resume source, also readable online |

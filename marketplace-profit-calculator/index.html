@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noon &amp; Amazon Profit Calculator with VAT (KSA, UAE) | Deepak Jatav</title>
+<meta name="description" content="Free marketplace profit calculator for Noon, Amazon and other channels in Saudi Arabia (15% VAT) and the UAE (5% VAT). See VAT, commission, shipping, product cost, profit per unit and net margin.">
+<meta name="author" content="Deepak Jatav">
+<meta name="theme-color" content="#fcfcfb">
+<link rel="canonical" href="https://deepakjatav.com/marketplace-profit-calculator/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Deepak Jatav">
+<meta property="og:title" content="Marketplace Profit Calculator: Saudi Arabia and UAE, with VAT">
+<meta property="og:description" content="Where one sale actually goes: VAT, commission, shipping, product cost and the profit left over.">
+<meta property="og:url" content="https://deepakjatav.com/marketplace-profit-calculator/">
+<meta property="og:image" content="https://deepakjatav.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- ?v= must change on every publish, and match index.html -->
+<link rel="stylesheet" href="../assets/css/style.css?v=2026-11-23.8">
+<script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('ready')},2500);</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Marketplace profit calculator",
+      "url": "https://deepakjatav.com/marketplace-profit-calculator/",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Any, runs in the browser",
+      "description": "Splits one marketplace sale in Saudi Arabia or the UAE into VAT, commission, shipping, product cost and profit, and shows profit per unit and net margin.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Deepak Jatav", "url": "https://deepakjatav.com/" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Deepak Jatav", "item": "https://deepakjatav.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Marketplace profit calculator", "item": "https://deepakjatav.com/marketplace-profit-calculator/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "How is profit per unit worked out?", "acceptedAnswer": { "@type": "Answer", "text": "Start from the selling price including VAT and take away the VAT, the marketplace commission, the shipping cost and the product cost. What is left is the profit on one unit." } },
+        { "@type": "Question", "name": "What VAT rate applies in Saudi Arabia and the UAE?", "acceptedAnswer": { "@type": "Answer", "text": "The standard VAT rate is 15% in Saudi Arabia and 5% in the UAE. Marketplace prices shown to customers include VAT, so the VAT is the price minus the price divided by 1.15 or 1.05." } },
+        { "@type": "Question", "name": "Is commission charged on the price including VAT?", "acceptedAnswer": { "@type": "Answer", "text": "It depends on the marketplace and the category. This calculator applies the commission to the VAT-inclusive price, which gives the more cautious answer." } },
+        { "@type": "Question", "name": "What is net margin?", "acceptedAnswer": { "@type": "Answer", "text": "Net margin here is profit per unit divided by the selling price before VAT, so the VAT you collect for the government does not inflate the margin." } },
+        { "@type": "Question", "name": "What does the calculator leave out?", "acceptedAnswer": { "@type": "Answer", "text": "It is a simplified model. Returns, storage and fulfilment fees, payment or closing fees, advertising and fixed costs are not included, and real fee structures vary by marketplace and category." } }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#calculator">Skip to the calculator</a>
+
+<header class="top" id="top">
+  <div class="wrap top-row">
+    <a class="top-name" href="../">Deepak Jatav</a>
+    <nav class="top-nav" id="topNav" aria-label="Primary">
+      <a href="../#work">Work</a>
+      <a href="../#dashboards">Dashboards</a>
+      <a href="../#process">Process</a>
+      <a href="../#calculators">Calculators</a>
+      <a href="../#experience">Experience</a>
+      <a href="../#contact">Contact</a>
+    </nav>
+    <a class="btn btn-solid top-cta" href="../assets/Deepak_Jatav_Resume.pdf" download="Deepak_Jatav_Resume.pdf" data-resume>Résumé <span aria-hidden="true">&darr;</span></a>
+    <button class="top-menu" id="menuBtn" type="button" aria-expanded="false" aria-controls="topNav">Menu</button>
+  </div>
+  <div class="progress" aria-hidden="true"><i id="progress"></i></div>
+</header>
+
+<main>
+
+<section class="tool-hero wrap">
+  <p class="tool-crumbs"><a href="../">Deepak Jatav</a><span aria-hidden="true">/</span><a href="../#calculators">Calculators</a></p>
+  <h1 class="tool-title">Marketplace profit calculator</h1>
+  <p class="tool-lede">The selling price is not what you keep. For a sale on Noon, Amazon or any other marketplace in Saudi Arabia or the UAE, see how much goes to VAT, commission, shipping and product cost, and what is left as profit.</p>
+</section>
+
+<section class="tool-body wrap" id="calculator">
+  <div class="tool-grid">
+
+    <article class="calc" id="profitCalc" aria-label="Marketplace profit calculator">
+      <div class="seg" role="group" aria-label="Market">
+        <span class="seg-label">Market</span>
+        <button type="button" aria-pressed="true" data-vat="ksa">Saudi Arabia, VAT 15%</button>
+        <button type="button" aria-pressed="false" data-vat="uae">UAE, VAT 5%</button>
+      </div>
+
+      <div class="split" id="splitBar" role="img" aria-label="Breakdown of one sale">
+        <i data-k="vat"></i><i data-k="comm"></i><i data-k="ship"></i><i data-k="cost"></i><i data-k="profit"></i>
+      </div>
+      <ul class="split-legend">
+        <li><i data-k="vat"></i><span>VAT</span><b id="pVat">25.96</b></li>
+        <li><i data-k="comm"></i><span>Commission</span><b id="pComm">29.85</b></li>
+        <li><i data-k="ship"></i><span>Shipping</span><b id="pShip">18.00</b></li>
+        <li><i data-k="cost"></i><span>Product cost</span><b id="pCost">70.00</b></li>
+        <li><i data-k="profit"></i><span>Profit</span><b id="pProfit">55.19</b></li>
+      </ul>
+
+      <div class="inputs">
+        <label class="slider"><span>Price, incl. VAT <b><input class="num" type="number" data-for="pPrice" min="1" max="2000" step="1" value="199" inputmode="decimal"> <i class="cur">SAR</i></b></span><input type="range" id="pPrice" min="1" max="2000" value="199" aria-label="Price including VAT"></label>
+        <label class="slider"><span>Commission <b><input class="num" type="number" data-for="pCommPct" min="0" max="50" step="0.5" value="15" inputmode="decimal"> %</b></span><input type="range" id="pCommPct" min="0" max="50" step="0.5" value="15" aria-label="Commission percentage"></label>
+        <label class="slider"><span>Shipping <b><input class="num" type="number" data-for="pShipIn" min="0" max="200" step="1" value="18" inputmode="decimal"> <i class="cur">SAR</i></b></span><input type="range" id="pShipIn" min="0" max="200" value="18" aria-label="Shipping cost"></label>
+        <label class="slider"><span>Product cost <b><input class="num" type="number" data-for="pCostIn" min="0" max="2000" step="1" value="70" inputmode="decimal"> <i class="cur">SAR</i></b></span><input type="range" id="pCostIn" min="0" max="2000" value="70" aria-label="Product cost"></label>
+      </div>
+
+      <div class="verdict verdict-two" id="profitVerdict" aria-live="polite">
+        <div><span class="verdict-label">Profit per unit</span><b class="verdict-num"><span id="pProfitBig">55.19</span> <i class="cur">SAR</i></b></div>
+        <div><span class="verdict-label">Net margin</span><b class="verdict-num"><span id="pMargin">31.9</span>%</b></div>
+      </div>
+    </article>
+
+    <div class="tool-notes">
+      <h2>How it is worked out</h2>
+      <p class="formula-big">Profit = price − VAT − commission − shipping − product cost</p>
+      <ul class="tool-steps">
+        <li><b>VAT</b> is inside the price customers pay: price − price ÷ 1.15 in Saudi Arabia, or ÷ 1.05 in the UAE.</li>
+        <li><b>Commission</b> is a percentage of the VAT-inclusive price here, the more cautious case.</li>
+        <li><b>Net margin</b> is profit divided by the price before VAT.</li>
+      </ul>
+
+      <h3>A worked example</h3>
+      <p>A pillow sells for 199 SAR on a Saudi marketplace. 25.96 SAR of that is VAT, a 15% commission takes 29.85 SAR, shipping costs 18 SAR and the pillow cost 70 SAR. That leaves 55.19 SAR of profit, a net margin of 31.9% on the 173.04 SAR price before VAT. Raise the commission to 25% and profit falls to 35.29 SAR.</p>
+
+      <h3>What it leaves out</h3>
+      <p>Returns, storage and fulfilment fees, payment or closing fees, advertising and fixed costs. Real fee structures vary by marketplace and category, so treat this as a first check before you set a price.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="tool-faq wrap">
+  <h2 class="tool-h2">Questions</h2>
+  <dl class="faq">
+    <div><dt>How is profit per unit worked out?</dt><dd>Start from the selling price including VAT and take away the VAT, the marketplace commission, the shipping cost and the product cost. What is left is the profit on one unit.</dd></div>
+    <div><dt>What VAT rate applies in Saudi Arabia and the UAE?</dt><dd>The standard VAT rate is 15% in Saudi Arabia and 5% in the UAE. Marketplace prices shown to customers include VAT, so the VAT is the price minus the price divided by 1.15 or 1.05.</dd></div>
+    <div><dt>Is commission charged on the price including VAT?</dt><dd>It depends on the marketplace and the category. This calculator applies the commission to the VAT-inclusive price, which gives the more cautious answer.</dd></div>
+    <div><dt>What is net margin?</dt><dd>Net margin here is profit per unit divided by the selling price before VAT, so the VAT you collect for the government does not inflate the margin.</dd></div>
+    <div><dt>What does the calculator leave out?</dt><dd>It is a simplified model. Returns, storage and fulfilment fees, payment or closing fees, advertising and fixed costs are not included, and real fee structures vary by marketplace and category.</dd></div>
+  </dl>
+</section>
+
+<section class="tool-author wrap">
+  <div class="tool-author-in">
+    <p class="tool-author-k">Built by</p>
+    <p class="tool-author-t"><a href="../">Deepak Jatav</a>, analytics and BI lead in Bengaluru. I analyse price, margin and profit by channel after commission, shipping, VAT and returns for a brand selling on Amazon, Noon, Namshi, Trendyol, Home Centre and Centrepoint.</p>
+    <p class="tool-author-links"><a class="link-arrow" href="../">See my work <span aria-hidden="true">&rarr;</span></a><a class="link-arrow" href="../volumetric-weight-calculator/">Volumetric weight calculator <span aria-hidden="true">&rarr;</span></a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="tool-foot wrap">
+  <span>&copy; <span id="year">2026</span> Deepak Jatav</span>
+  <a href="../">deepakjatav.com</a>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../assets/js/main.js?v=2026-11-23.8" defer></script>
+</body>
+</html>
