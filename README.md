@@ -11,7 +11,7 @@ Personal portfolio and resume of Deepak Jatav, Senior Data Analyst & Operations 
 | --- | --- |
 | `index.html` | The portfolio (single page) |
 | `assets/css/style.css` | All styling and CSS animation |
-| `assets/js/main.js` | Interactions: route canvas, scroll effects, calculators |
+| `assets/js/main.js` | Sample dashboards, order-to-cash stepper, calculators |
 | `resume.html` | Resume source, also readable online |
 | `assets/Deepak_Jatav_Resume.pdf` | The downloadable 2-page ATS-friendly resume |
 
