@@ -1,0 +1,5 @@
+# deepakjatav.com: search engines and AI tools are welcome to read this site.
+User-agent: *
+Allow: /
+
+Sitemap: https://deepakjatav.com/sitemap.xml

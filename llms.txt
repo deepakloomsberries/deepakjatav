@@ -1,0 +1,30 @@
+# Deepak Jatav
+
+> Analytics and business intelligence lead in Bengaluru, India. He builds the data warehouse, dashboards and order-to-cash reconciliation for a home-textiles brand selling on Amazon, Noon, Namshi, Trendyol, Home Centre, Centrepoint and its own Zid store across Saudi Arabia and the UAE.
+
+Key facts (figures from his reconciliation portal, November 2026):
+
+- Current role: Senior Data Analyst & Operations Lead at Looms & Berries LLP, Bengaluru, since September 2023. Leads a team of 6 analysts.
+- 5+ years in analytics and e-commerce operations; went from intern to lead in about two and a half years at the same company.
+- Designed a Google BigQuery warehouse holding 5+ years of sales, ads, inventory and payments data, with automated Looker Studio dashboards on top.
+- Built a channel reconciliation portal: 60,000+ orders a year across 9 sales channels reconciled against marketplace settlements and Ginesys ERP; 96% of sales match automatically; 25 data sources; 11 active users.
+- Built a price tracker covering 3,000+ SKUs on Amazon KSA and UAE, a B2B ordering app and a company task manager.
+- Tools: SQL, Python, Google BigQuery, Power BI, Looker Studio, Excel and Power Query, Tableau, Ginesys ERP, Unicommerce OMS.
+- Education: B.Sc. Information Technology, Jiwaji University.
+
+The interactive dashboards on the site use sample data, not company figures.
+
+## Pages
+
+- [Portfolio](https://deepakjatav.com/): case studies, sample dashboards, an order-to-cash walkthrough, two e-commerce calculators and experience
+- [Résumé, web version](https://deepakjatav.com/resume.html)
+- [Résumé, PDF](https://deepakjatav.com/assets/Deepak_Jatav_Resume.pdf)
+
+## Elsewhere
+
+- [LinkedIn](https://www.linkedin.com/in/deepakjatav)
+- [GitHub](https://github.com/deepakloomsberries)
+
+## Contact
+
+- Email: deepak.loomsberries@gmail.com

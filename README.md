@@ -18,6 +18,8 @@ Personal portfolio and resume of Deepak Jatav, Senior Data Analyst & Operations 
 | `assets/channels/` | Channel logos for the scrolling strip, trademarks of their owners: Amazon, Noon, Trendyol from Wikimedia Commons (public domain); Zid from zid.sa; Home Centre and Centrepoint from Landmark Group's image server; Namshi from namshi.com's header (recoloured black). Zid recoloured to its #3c1c54 purple for a light background |
 | `assets/flags/` | Saudi Arabia, UAE and India flags from [flag-icons](https://flagicons.lipis.dev) 7.6.0 (MIT) |
 | `sitemap.xml` | Page list for search engines; update `lastmod` when content changes |
+| `robots.txt` | Lets every crawler, AI tools included, read the site, and points them to the sitemap |
+| `llms.txt` | Plain-text summary for AI tools ([llmstxt.org](https://llmstxt.org) convention); keep its figures in step with the site |
 
 Plain HTML, CSS and JavaScript. No build step and no dependencies, so GitHub Pages serves it as is.
 
