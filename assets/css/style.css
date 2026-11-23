@@ -894,6 +894,11 @@ input[type="range"]:hover::-webkit-slider-thumb, input[type="range"]:active::-we
   .marquee-band { padding: 18px 0; }
 }
 
+@media (max-width: 420px) {
+  .eyebrow { gap: 9px; font-size: 10.5px; letter-spacing: 0.12em; white-space: nowrap; }
+  .eyebrow-line { width: 24px; }
+}
+
 /* ==========================================================================
    Reduced motion: keep everything readable, drop the movement
    ========================================================================== */

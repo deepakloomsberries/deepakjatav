@@ -17,6 +17,16 @@ Personal portfolio and resume of Deepak Jatav, Senior Data Analyst & Operations 
 
 Plain HTML, CSS and JavaScript. No build step and no dependencies, so GitHub Pages serves it as is.
 
+## Publishing a change
+
+GitHub Pages serves this site from the `gh-pages` branch, so push both branches together:
+
+```powershell
+git push origin main main:gh-pages
+```
+
+The live site updates about a minute later.
+
 ## Updating the resume
 
 1. Edit the text in `resume.html`.
