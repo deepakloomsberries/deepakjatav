@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- ?v= must change on every publish: GitHub Pages lets browsers reuse files for 10 minutes -->
-<link rel="stylesheet" href="assets/css/style.css?v=2026-11-23.5">
+<link rel="stylesheet" href="assets/css/style.css?v=2026-11-23.6">
 <script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('ready')},2500);</script>
 
 <!-- ProfilePage tells search engines this page is about one person; keep facts in step with the visible page -->
@@ -38,13 +38,13 @@
     "@type": "Person",
     "name": "Deepak Jatav",
     "jobTitle": "Senior Data Analyst & Operations Lead",
-    "description": "Analytics and business intelligence lead for e-commerce marketplaces in Saudi Arabia and the UAE: data warehouse, dashboards and order-to-cash reconciliation for Amazon, Noon, Namshi, Trendyol, Shopify, Home Centre and Centrepoint.",
+    "description": "Analytics and business intelligence lead for e-commerce marketplaces in Saudi Arabia and the UAE: data warehouse, dashboards and order-to-cash reconciliation for Amazon, Noon, Namshi, Trendyol, Home Centre, Centrepoint and the brand's own Zid store.",
     "worksFor": { "@type": "Organization", "name": "Looms & Berries LLP" },
     "address": { "@type": "PostalAddress", "addressLocality": "Bengaluru", "addressRegion": "Karnataka", "addressCountry": "IN" },
     "alumniOf": { "@type": "CollegeOrUniversity", "name": "Jiwaji University" },
     "url": "https://deepakloomsberries.github.io/deepakjatav/",
     "sameAs": ["https://www.linkedin.com/in/deepakjatav", "https://github.com/deepakloomsberries"],
-    "knowsAbout": ["Business intelligence", "Data analytics", "E-commerce analytics", "Marketplace analytics", "Supply chain analytics", "Order-to-cash reconciliation", "SQL", "Python", "Google BigQuery", "Power BI", "Looker Studio", "Amazon marketplace", "Noon marketplace", "Namshi", "Trendyol", "Shopify", "Ginesys ERP", "Unicommerce"]
+    "knowsAbout": ["Business intelligence", "Data analytics", "E-commerce analytics", "Marketplace analytics", "Supply chain analytics", "Order-to-cash reconciliation", "SQL", "Python", "Google BigQuery", "Power BI", "Looker Studio", "Amazon marketplace", "Noon marketplace", "Namshi", "Trendyol", "Zid", "Ginesys ERP", "Unicommerce"]
   }
 }
 </script>
@@ -154,7 +154,7 @@
       <li>Noon</li>
       <li>Namshi</li>
       <li>Trendyol</li>
-      <li>Shopify</li>
+      <li>Zid</li>
       <li>Home Centre</li>
       <li>Centrepoint</li>
     </ul>
@@ -185,7 +185,7 @@
         <h3>Channel reconciliation portal</h3>
         <dl class="pso">
           <div><dt>Problem</dt><dd>Every marketplace pays on its own schedule, in its own report format, net of its own fees. Matching orders to settlements lived in spreadsheets, and so did the answer to a simple question: what does this item actually earn on each channel?</dd></div>
-          <div><dt>What I built</dt><dd>A web portal the whole team works in. It reconciles orders against their settlements and Ginesys ERP channel by channel, across Noon, Amazon, Trendyol, Namshi, Home Centre, Centrepoint, the brand's own website and B2B, with order search and sales and profit views. It reads 25 data sources, from hourly Ginesys reports to the Noon and Trendyol APIs, and runs on a schedule every evening. Around that sit prices and margins per channel after fees and cost, stock sync between warehouse and listings, a bundle master, B2B receivables, and a credit-note creator that exports straight into Ginesys ERP.</dd></div>
+          <div><dt>What I built</dt><dd>A web portal the whole team works in. It reconciles orders against their settlements and Ginesys ERP channel by channel, across Noon, Amazon, Trendyol, Namshi, Home Centre, Centrepoint, the brand's own Zid store and B2B, with order search and sales and profit views. It reads 25 data sources, from hourly Ginesys reports to the Noon and Trendyol APIs, and runs on a schedule every evening. Around that sit prices and margins per channel after fees and cost, stock sync between warehouse and listings, a bundle master, B2B receivables, and a credit-note creator that exports straight into Ginesys ERP.</dd></div>
           <div><dt>Result</dt><dd>Reconciliation moved out of spreadsheets and into one place. 96% of sales now match Ginesys ERP automatically, and the rest become exceptions with the reason attached. None of the open ones is older than 30 days.</dd></div>
         </dl>
         <div class="case-nums">
@@ -354,7 +354,7 @@
       <div class="flow-panels">
         <article class="flow-panel is-on" data-panel="0">
           <h3>The order lands</h3>
-          <p>An order comes in from Amazon, Noon, Namshi, Trendyol, Shopify, Home Centre or Centrepoint and syncs into the order management system. Listing, price and stock all have to be right before this moment.</p>
+          <p>An order comes in from Amazon, Noon, Namshi, Trendyol, Home Centre, Centrepoint or the brand's own Zid store and syncs into the order management system. Listing, price and stock all have to be right before this moment.</p>
           <p class="flow-data"><b>What I measure here</b> Orders and sales by marketplace, listing and stock gaps, price against competitors.</p>
         </article>
         <article class="flow-panel" data-panel="1">
@@ -576,7 +576,7 @@
       </div>
       <div>
         <h3>Domain</h3>
-        <p>Marketplaces (Amazon, Noon, Namshi, Trendyol, Shopify, Home Centre, Centrepoint), pricing and margin, order-to-cash, courier logistics, inventory</p>
+        <p>Marketplaces (Amazon, Noon, Namshi, Trendyol, Home Centre, Centrepoint) and a Zid web store, pricing and margin, order-to-cash, courier logistics, inventory</p>
       </div>
       <div>
         <h3>Systems</h3>
@@ -624,6 +624,6 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/main.js?v=2026-11-23.5" defer></script>
+<script src="assets/js/main.js?v=2026-11-23.6" defer></script>
 </body>
 </html>

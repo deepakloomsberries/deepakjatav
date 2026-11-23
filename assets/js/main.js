@@ -218,7 +218,7 @@
       ksa: { name: 'Saudi Arabia', color: 'var(--s1)' },
       uae: { name: 'UAE', color: 'var(--s2)' },
     };
-    const CHANNELS = ['Amazon', 'Noon', 'Namshi', 'Trendyol', 'Shopify', 'Home Centre', 'Centrepoint'];
+    const CHANNELS = ['Amazon', 'Noon', 'Namshi', 'Trendyol', 'Zid', 'Home Centre', 'Centrepoint'];
     const BASE = { ksa: [420, 365, 118, 142, 88, 104, 76], uae: [255, 240, 150, 48, 62, 152, 111] };
     const AOV = [212, 198, 246, 164, 228, 259, 241];
     const RETURNS = [0.062, 0.071, 0.128, 0.094, 0.048, 0.039, 0.044];
